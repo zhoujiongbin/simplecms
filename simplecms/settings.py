@@ -60,7 +60,7 @@ ROOT_URLCONF = 'simplecms.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,  'templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -114,13 +114,11 @@ MEDIA_URL = '/media/'
 
 STATIC_URL = '/static/'
 
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR,  'templates'),
-    os.path.join(BASE_DIR,  'templates/admim'),
-    os.path.join(BASE_DIR,  'templates/home'),
-)
+# TEMPLATE_DIRS = (
+#     os.path.join(BASE_DIR,  'templates').replace('\\', '/'),
+# )
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR,  'static'),
-    os.path.join(BASE_DIR,  'media'),
+    os.path.join(BASE_DIR, 'static/../static/../media'),
 )
