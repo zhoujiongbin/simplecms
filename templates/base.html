@@ -1,11 +1,16 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-<html>
-<head lang="en">
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>{% block title %}{# 页面标题写在这里 #}{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 <body>
-
+    {% block header %}{# 头部内容 #}{% endblock %}
+    {% block content %}{# 页面主要内容 #}{% endblock %}
+    {% block footer %}{# 底部内容 #}{% endblock %}
 </body>
 </html>

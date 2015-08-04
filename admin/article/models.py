@@ -8,3 +8,5 @@ class Article(models.Model):
     article_content = models.TextField()
     article_cat_id = models.ForeignKey(Cat)
 
+
+
