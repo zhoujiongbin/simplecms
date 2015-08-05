@@ -11,15 +11,15 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 import base64
 
-def test(request):
-    return render_to_response('login.html',context_instance=RequestContext(request))
+def index(request):
+    return render_to_response('admin/user/login.html', context_instance=RequestContext(request))
 
 def login(request):
     if request.method == 'POST':
         user = User.objects.get(account = request.POST['account'])
         str = request.POST['account']+request.POST['password']
         if user.password == base64.b64encode(str.encode(encoding='utf-8')):
-            return HttpResponseRedirect('/admin')
+            return HttpResponseRedirect('admin_index')
         else:
             str = '<script>alert("密码或账号错误");window.history.go(-1)</script>'
             return HttpResponse(str)
