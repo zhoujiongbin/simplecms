@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from admin.detail.models import Detail
 from admin.cat.models import Cat
 from admin.article.models import Article
+from common.function import get_cat
 
 # 主页
 def index(request, cat_id=1, id=1):
@@ -47,12 +48,6 @@ def get_cats():
                 'cat_id': item.cat_id
             })
     return cats
-
-# 根据ID获取分类名
-def get_cat(id):
-    query_set = Cat.objects.get(cat_id=id)
-    cat_name = query_set.cat_name
-    return cat_name
 
 # 根据分类获取文章列表
 def get_articles(request, cat_id=1):
