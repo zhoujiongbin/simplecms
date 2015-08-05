@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <meta charset="UTF-8"/>
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            var members = ["John", "Steve", "Ben", "Damo", "Ian"];
+
+            members = $.map(members, function (n, i) {
+                return (i + 1 + "." + n);
+            });
+            $("#p1").html(members.join("<br/>"));
+
+            members2 = $.map(members, function (m, j) {
+                return (j + 1 + "." + m.toUpperCase());
+            });
+            $("#p2").html(members2.join("<br/>"));
+
+            members3 = $.map(members2, function (x) {
+                return (x.toUpperCase());
+            });
+            $.each(members3, function (index, value) {
+                $("#list").append("<li>" + value + "</li>");
+            });
+        });
+    </script>
+</head>
+<body>
+    <h3>
+        使用有序列表</h3>
+    <p id="p1">
+    </p>
+    <p id="p2">
+    </p>
+    <ol id="list">   
+    </ol>
+</body>
+</html>

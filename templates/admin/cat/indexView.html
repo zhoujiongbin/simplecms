@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <button><a href={% url "cat_add" %}>添加新类</a></button>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>名称</th>
+            <th>操作</th>
+        </tr>
+        {% for i in catlist %}
+            <tr>
+                <td>{{ i.cat_id }}</td>
+                <td>{{i.cat_name}}</td>
+            `   <td>
+                    <a href={% url "cat_edit" i.cat_id%}>修改</a>
+                    <a href={% url "cat_delete" i.cat_id %}>删除</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>

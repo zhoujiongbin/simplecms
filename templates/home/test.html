@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}主页{% endblock %}
+
+{% block header %}
+    <div class="header">
+        <div><img src="{% static ''%}{{ detail.logo_path }}"></div>
+        <div>我们是：{{ detail.title }}公司</div>
+        <div>我们的简介：{{ detail.introduction }}</div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="side">
+        <h1>分类</h1>
+        <ul>
+            {% for item in cats %}
+                <li><a href="{{ item.cat_url }}">{{ item.cat_name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="content">
+        <h1>分类:{{ cat_name }}</h1>
+        <ul>
+            {% for item in articles %}
+                <li><a href="{{ item.article_url }}">{{ item.article_title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="content">
+        <h1>文章标题:{{ article.article_title }}</h1>
+        <h5>文章作者：{{ article.article_author }}</h5>
+        <h5>发布时间：{{ article.publish_time }}</h5>
+        <p>文章内容：{{ article.article_content }}</p>
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

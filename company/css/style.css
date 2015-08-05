@@ -1,0 +1,5 @@
+
+#myTab li{float: none;}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{border-radius: initial;border:none;background-color: #0088CC;color: #FFFFFF;}
+.nav-tabs>li>a{border-radius: inherit;}
+.nav-tabs {border: none;}
