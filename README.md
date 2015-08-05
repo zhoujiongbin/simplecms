@@ -1,5 +1,5 @@
 # simplecms
-# Python版本3.4
-# Django版本1.8
-# 使用pymysql代替MySQLdb
+# Python version 3.4
+# Django version 1.8
+# 浣跨敤pymysql浠ｆ浛MySQLdb
 
