@@ -12,6 +12,7 @@ from django.template import RequestContext
 from functools import wraps
 import base64
 
+<<<<<<< HEAD
 def test(request):
     return render_to_response('sign.html', context_instance=RequestContext(request))
 
@@ -24,15 +25,23 @@ def index(func):
         else:
             return render_to_response('login.html', context_instance=RequestContext(request))
     return wrapper
+=======
+def index(request):
+    return render_to_response('admin/user/login.html', context_instance=RequestContext(request))
+>>>>>>> 109a2d7cfb6da8dd012149ef55523708162f3481
 
 def login(request):
     if request.method == 'POST':
         user = User.objects.get(account = request.POST['account'])
         str = request.POST['account']+request.POST['password']
         if user.password == base64.b64encode(str.encode(encoding='utf-8')):
+<<<<<<< HEAD
             request.session['username'] = request.POST['account']
             str = '<script>window.history.go(-1)</script>'
             return HttpResponse(str)
+=======
+            return HttpResponseRedirect('admin_index')
+>>>>>>> 109a2d7cfb6da8dd012149ef55523708162f3481
         else:
             str = '<script>alert("密码或账号错误");window.history.go(-1)</script>'
             return HttpResponse(str)
