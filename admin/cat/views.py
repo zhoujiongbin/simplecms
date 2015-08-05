@@ -28,7 +28,7 @@ def add(request):
 # 修改分类
 def edit(request, cat_id):
     cat = Cat.objects.get(cat_id=cat_id)
-    if request.method=='POST':
+    if request.method == 'POST':
         cat_change = request.POST['cat_name']
         if cat_change:
             cat.cat_name = cat_change
