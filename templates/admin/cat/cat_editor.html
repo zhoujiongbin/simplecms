@@ -18,7 +18,11 @@
             <div class="form-group">
                 <label for="" class="col-sm-1 control-label pt5">父类ID：</label>
                 <div class="col-sm-6">
-                    <input type="text" name="cat_father" id="cat_father" value="{{ cat_form.cat_father }}" class="form-control" />
+                    <select name="cat_father" class="form-control">
+                        {% for item in cats %}
+                            <option value="{{ item.cat_id }}">{{ item.cat_name }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
             <div class="col-sm-offset-2 col-sm-10 mt20">

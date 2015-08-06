@@ -18,13 +18,12 @@ def get_cats():
     # 获取一级分类
     for item in query_set:
         father_id = item.cat_father
-        if father_id == 0:
-            cats.append({
-                'cat_father': item.cat_father,
-                'cat_name': item.cat_name,
-                'cat_url':'/'+str(item.cat_id),  # 分类的链接url
-                'cat_id': item.cat_id,
-            })
+        cats.append({
+            'cat_father': item.cat_father,
+            'cat_name': item.cat_name,
+            'cat_url':'/'+str(item.cat_id),  # 分类的链接url
+            'cat_id': item.cat_id,
+        })
     return cats
 
 # 获取公司logo路径，公司标题，公司简介

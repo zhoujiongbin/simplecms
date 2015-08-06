@@ -10,7 +10,7 @@
                 
     <div class="row">
         <form action="{% url 'detail_update' %}" class="form-horizontal" method="post" enctype="multipart/form-data">{% csrf_token %}
-            <input type="text" name="detail_id" value="{{ detail.id }}">
+            <input type="hidden" name="detail_id" value="{{ detail.id }}">
             <div class="form-group">
                 <label for="" class="col-sm-2 control-label pt5 text-right">公司名称：</label>
                 <div class="col-sm-6">
