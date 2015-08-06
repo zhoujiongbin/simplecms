@@ -7,45 +7,43 @@
         </div><!-- /.col-lg-12 -->
     </div><!-- /.row -->
     <div class="row">
-        <form action="" class="form-horizontal" method="post">{% csrf_token %}
+        <form action="{% url 'article_add' %}" class="form-horizontal" method="post">{% csrf_token %}
             <div class="form-group">
                 <label for="" class="col-sm-2 control-label pt5 text-right">标题：</label>
                 <div class="col-sm-6">
-                    <input type="text" name="" id="" value="" class="form-control" />
+                    <input type="text" name="title" id="" value="" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-2 control-label pt5 text-right">作者：</label>
                 <div class="col-sm-6">
-                    <input type="text" name="" id="" value="" class="form-control" />
+                    <input type="text" name="author" id="" value="" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-2 control-label pt5 text-right">所属分类：</label>
                 <div class="col-sm-6">
-                    <select class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                    <select name="cat_id" class="form-control">
+                        {% for item in cats %}
+                            <option value="{{ item.cat_id }}">{{ item.cat_name }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-2 control-label pt5 text-right">发布时间：</label>
                 <div class="col-sm-6">
-                    <input type="text" name="" id="nowTime" value="" class="form-control" />
+                    <input type="datetime-local" name="publish_time" id="nowTime" value="" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-2 control-label pt5 text-right">正文内容：</label>
                 <div class="col-sm-6">
-                    <textarea type="text" name="" id="" value="" class="form-control" rows="12"></textarea>
+                    <textarea type="text" name="content" id="" value="" class="form-control" rows="12"></textarea>
                 </div>
             </div>
             <div class="col-sm-offset-2 col-sm-10 mt20">
-                <input type="submit" class="btn btn-primary">提交</input>
+                <button type="submit" class="btn btn-primary">提交</button>
                 <button type="submit" class="btn btn-default" onclick="history.go(-1);return false">返回</button>
             </div>
         </form>

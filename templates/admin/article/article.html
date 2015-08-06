@@ -31,15 +31,15 @@
                             <tbody>
                             {% for item in article_list %}
                                 <tr>
-                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.article_id }}</td>
                                     <td>{{ item.cat_name }}</td>
-                                    <td>{{ item.title }}</td>
-                                    <td>{{ item.author }}</td>
-                                    <td id="content">{{ item.content }}</td>
+                                    <td>{{ item.article_title }}</td>
+                                    <td>{{ item.article_author }}</td>
+                                    <td id="content">{{ item.article_content }}</td>
                                     <td>{{ item.publish_time }}</td>
                                     <td>
-                                        <a href="{% url 'article_edit' %}" class="ml10 mr10">编辑</a>
-                                        <a href="" class="ml10 mr10">删除</a>
+                                        <a href="{% url 'article_edit' item.article_id %}" class="ml10 mr10">编辑</a>
+                                        <a href="{% url 'article_delete' item.article_id %}" class="ml10 mr10">删除</a>
                                     </td>
                                 </tr>
                             {% endfor %}

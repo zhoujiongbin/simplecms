@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # __author__ = 'feng'
-from django.http import HttpResponse
+
 from django.shortcuts import render_to_response
 from admin.article.models import Article
 
