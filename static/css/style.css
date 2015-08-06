@@ -1,0 +1,10 @@
+
+#myTab li{float: none;}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{border-radius: initial;border:none;background-color: #0088CC;color: #FFFFFF;}
+.nav-tabs>li>a{border-radius: inherit;}
+.nav-tabs {border: none;}
+
+.jumbotron{}
+.jumbotron .logo{border-radius: 50%;width: 220px;height: 220px;display: inline-block;vertical-align: top;}
+.jumbotron .logo img{width: 100%;height: 100%;border-radius: 50%;}
+.jumbotron .right{width: 780px;display: inline-block;padding-left: 30px;}

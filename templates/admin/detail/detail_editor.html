@@ -1,0 +1,53 @@
+{% extends 'base/admin_base.html' %}
+{% load staticfiles %}
+{% block title %}后台 | 公司信息管理{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">编辑公司信息</h1>
+        </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+                
+    <div class="row">
+        <form action="{% url 'detail_update' %}" class="form-horizontal" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <input type="text" name="detail_id" value="{{ detail.id }}">
+            <div class="form-group">
+                <label for="" class="col-sm-2 control-label pt5 text-right">公司名称：</label>
+                <div class="col-sm-6">
+                    <input type="text" name="title" id="" value="{{ detail.title }}" class="form-control" placeholder=""/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-2 control-label pt5 text-right">公司简介：</label>
+                <div class="col-sm-6">
+                    <textarea name="introduction" id="" class="form-control" rows="5" placeholder="">{{ detail.introduction }}</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-2 control-label pt5 text-right">公司Logo：</label>
+                <div class="col-sm-6">
+                    <div id="imgdiv"><img id="imgShow" src="{% static '' %}{{ detail.logo_path }}" width="368" height="260" class="mb20" /></div>
+                    <input type="file" name="file" id="up_img" />
+                </div>
+            </div>
+            <div class="col-sm-offset-2 col-sm-10 mt20">
+                <button type="submit" class="btn btn-primary">确认修改</button>
+                <button type="submit" class="btn btn-default" onclick="history.go(-1);return false">返回</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block other %}
+    <script src="{% static 'js/uploadPreview.min.js' %}" type="text/javascript" charset="utf-8"></script>
+
+    <script>
+        window.onload = function() {
+            new uploadPreview({
+                UpBtn: "up_img",
+                DivShow: "imgdiv",
+                ImgShow: "imgShow"
+            });
+        }
+    </script>
+{% endblock %}

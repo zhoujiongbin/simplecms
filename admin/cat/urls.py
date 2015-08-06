@@ -6,8 +6,8 @@ from django.conf.urls import include, url
 from admin.cat import views
 
 urlpatterns = [
-    url(r'^$', views.indexView, name='cat_view'),
-    url(r'^add/$',views.addCat,name='cat_add'),
-    url(r'^edit/(?P<ID>\d+)/$', views.editCat, name='cat_edit'),
-    url(r'^delete/(?P<ID>\d+)/$',views.deleteCat,name='cat_delete'),
+    url(r'^$', views.cat, name='cat'),
+    url(r'^add/$',views.add,name='cat_add'),
+    url(r'^edit/(?P<cat_id>\d+)/$', views.edit, name='cat_edit'),
+    url(r'^delete/(?P<cat_id>\d+)/$',views.delete,name='cat_delete'),
 ]

@@ -1,51 +1,55 @@
-#coding:utf-8
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render,render_to_response
 from admin.cat.models import Cat
 from django.http import Http404, HttpResponse,HttpResponseRedirect
 from admin.cat.form import AddCat,EditCat
 from django.core.urlresolvers import reverse
+from django.views.decorators.csrf import csrf_exempt
+from django.template import RequestContext
 
-#分类列表
-def indexView(request):
+# 分类管理界面
+def cat(request):
     cat_list = Cat.objects.all()
-    return render_to_response('admin/cat/indexView.html',{'catlist':cat_list})
+    return render_to_response('admin/cat/cat.html',{'cat_list':cat_list})
 
-#添加分类
-def addCat(request):
+# 添加分类
+@csrf_exempt
+def add(request):
    if request.method == 'POST':
-       newCat = AddCat(request.POST)
-       if newCat.is_valid():
-           cat_name = newCat.cleaned_data['cat_name']
-           Cat.objects.create(cat_name=cat_name,cat_father=1)
-           return HttpResponseRedirect(reverse('cat_view'))
+        cat_name = request.POST['cat_name']
+        cat_father = request.POST['cat_father']
+        Cat.objects.create(cat_name=cat_name, cat_father=cat_father)
+        return HttpResponseRedirect(reverse('cat'))
    else:
-        newCat = AddCat()
-   return render_to_response('admin/cat/add.html',{'newCat':newCat})
+        new_cat = AddCat()
+   return render_to_response('admin/cat/cat_add.html', {'new_cat': new_cat})
 
-#修改分类
-def editCat(request,ID):
-    cat = Cat.objects.get(cat_id=ID)
-    if request.method=='POST':
-        catChange = request.POST['cat_name']
-        if catChange:
-            cat.cat_name = catChange
+# 修改分类
+def edit(request, cat_id):
+    cat = Cat.objects.get(cat_id=cat_id)
+    if request.method == 'POST':
+        cat_change = request.POST['cat_name']
+        if cat_change:
+            cat.cat_name = cat_change
+            cat.cat_father = request.POST['cat_father']
             cat.save()
-            return HttpResponseRedirect(reverse('cat_view'))
+            return HttpResponseRedirect(reverse('cat'))
         else:
-           raise ValueError("请输入修改信息")
+           raise ValueError("修改失败")
     else:
-        catForm = cat
+        cat_form = cat
     kwvars ={
-         'ID':ID,
-         'catForm':catForm,
+         'cat_id': cat_id,
+         'cat_form':cat_form,
      }
-    return render_to_response('admin/cat/edit.html',kwvars)
+    return render_to_response('admin/cat/cat_editor.html',kwvars,context_instance=RequestContext(request))
 
 
-#删除分类
-def deleteCat(request,ID):
-    Cat.objects.get(cat_id=ID).delete()
-    return HttpResponseRedirect(reverse('cat_view'))
+# 删除分类
+def delete(request,cat_id):
+    Cat.objects.get(pk=cat_id).delete()
+    return HttpResponseRedirect(reverse('cat'))
 
 
 
