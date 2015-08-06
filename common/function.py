@@ -7,14 +7,19 @@ from admin.detail.models import Detail
 
 # 根据ID获取分类名
 def get_cat(id):
-    query_set = Cat.objects.get(cat_id=id)
-    cat_name = query_set.cat_name
-    return cat_name
+    c = Cat.objects.get(cat_id=id)
+    cat = {
+        'cat_father': c.cat_father,
+        'cat_name': c.cat_name,
+        'cat_url':'/'+str(c.cat_id),  # 分类的链接url
+        'cat_id': c.cat_id,
+    }
+    return cat
 
 # 获取所有分类
 def get_cats():
     query_set = Cat.objects.all()
-    cats = [] # 用来储存搜索结果
+    cats = []  # 用来储存搜索结果
     # 获取一级分类
     for item in query_set:
         father_id = item.cat_father
@@ -29,7 +34,10 @@ def get_cats():
 
 # 获取公司logo路径，公司标题，公司简介
 def get_detail():
-    query_set = Detail.objects.get(id=1)
+    try:
+        query_set = Detail.objects.get()
+    except query_set.MultipleObjectsReturned:
+        query_set = Detail.objects.all()[:1]
     detail = {
         'logo_path': query_set.logo_path,
         'title': query_set.title,
@@ -48,17 +56,16 @@ def get_all_articles():
             'article_author': item.article_author,
             'article_content': item.article_content,
             'publish_time': item.publish_time,
-            'cat_name': get_cat(int(item.article_cat_id_id)),
+            'cat': get_cat(int(item.article_cat_id_id)),
             'article_url': '/'+str(item.article_cat_id_id)+'/'+str(item.id),  # 文章的链接url
             'article_edit_url': '/edit/'+str(item.id),
         })
     return article_list
 
 # 根据分类获取文章列表
-def get_articles(request, cat_id=1):
+def get_articles(cat_id=1):
     article_list = []   # 储存搜索结果
     query_set = Article.objects.filter(article_cat_id_id=cat_id)
-    cat_name = get_cat(cat_id)
     for item in query_set:
         article_list.append({
             'article_id': item.id,
@@ -66,21 +73,22 @@ def get_articles(request, cat_id=1):
             'article_author': item.article_author,
             'article_content': item.article_content,
             'publish_time': item.publish_time,
-            'cat_name': get_cat(item.article_cat_id_id),
-            'article_url': '/'+str(cat_id)+'/'+str(item.id),  # 文章的链接url
+            'cat': get_cat(int(item.article_cat_id_id)),
+            'article_url': '/'+str(item.article_cat_id_id)+'/'+str(item.id),  # 文章的链接url
             'article_edit_url': '/edit/'+str(item.id),
         })
-    return cat_name, article_list
+    return article_list
 
 
 # 获取文章详情内容
 def get_article(id=1):
-    query_set = Article.objects.get(id=id)
+    a = Article.objects.get(id=id)
     article = {
-        'article_id': query_set.id,
-        'article_title': query_set.article_title,
-        'article_author': query_set.article_author,
-        'article_content': query_set.article_content,  # 文章内容
-        'publish_time': query_set.publish_time,
+        'article_id': a.id,
+        'article_title': a.article_title,
+        'article_author': a.article_author,
+        'article_content': a.article_content,  # 文章内容
+        'publish_time': a.publish_time,
+        'cat': get_cat(int(a.article_cat_id_id)),
     }
     return article

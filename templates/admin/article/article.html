@@ -32,7 +32,7 @@
                             {% for item in article_list %}
                                 <tr>
                                     <td>{{ item.article_id }}</td>
-                                    <td>{{ item.cat_name }}</td>
+                                    <td>{{ item.cat.cat_name }}</td>
                                     <td>{{ item.article_title }}</td>
                                     <td>{{ item.article_author }}</td>
                                     <td id="content">{{ item.article_content }}</td>
@@ -40,6 +40,7 @@
                                     <td>
                                         <a href="{% url 'article_edit' item.article_id %}" class="ml10 mr10">编辑</a>
                                         <a href="{% url 'article_delete' item.article_id %}" class="ml10 mr10">删除</a>
+                                        <a href="{{ item.article_url }}" class="ml10 mr10">查看</a>
                                     </td>
                                 </tr>
                             {% endfor %}
