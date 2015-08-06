@@ -36,7 +36,7 @@
                                     <td>{{ item.article_title }}</td>
                                     <td>{{ item.article_author }}</td>
                                     <td id="content">{{ item.article_content }}</td>
-                                    <td>{{ item.publish_time }}</td>
+                                    <td>{{ item.publish_time|date:'Y-m-d H:m:s' }}</td>
                                     <td>
                                         <a href="{% url 'article_edit' item.article_id %}" class="ml10 mr10">编辑</a>
                                         <a href="{% url 'article_delete' item.article_id %}" class="ml10 mr10">删除</a>

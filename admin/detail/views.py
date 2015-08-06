@@ -8,11 +8,13 @@ from admin.detail.models import Detail
 from django import forms
 import os
 import time
+from admin.user.permission import require_login
 
 class UploadFileForm(forms.Form):
     file = forms.FileField()
 
 # 根据url跳转至信息管理界面或者信息编辑界面或者信息添加界面
+@require_login
 def detail(request, template):
     try:
         d = Detail.objects.get(id=1)   # 获取公司信息
@@ -22,6 +24,7 @@ def detail(request, template):
 
 
 # 保存添加的信息
+@require_login
 def save(request):
     if request.POST.get('title'):
         f = UploadFileForm(request.POST, request.FILES)
@@ -34,6 +37,7 @@ def save(request):
         return HttpResponseRedirect('/admin/detail')
 
 # 更新信息
+@require_login
 def update(request):
     if request.POST.get('detail_id'):
         detail_id = request.POST.get('detail_id')
@@ -48,6 +52,7 @@ def update(request):
         return HttpResponseRedirect('/admin/detail')
 
 # 删除公司信息
+@require_login
 def delete(request, id):
     Detail.objects.get(pk=id).delete()
 

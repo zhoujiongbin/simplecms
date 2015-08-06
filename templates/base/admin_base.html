@@ -2,6 +2,7 @@
 <html>
     <head lang="en">
         {% include 'base/head.html' %}{# 头部的meta标签和css链接 #}
+        {% block js %}{% endblock %}
         <title>{% block title %}{# 页面标题写在这里 #}{% endblock %}</title>
 	</head>
     <body>
@@ -17,4 +18,5 @@
         {% include 'base/foot.html' %}{# 底部放js脚本链接 #}
         {% block other %}{# 其他一些补充的js #}{% endblock %}
     </body>
+    {% block endjs %}{% endblock %}
 </html>
