@@ -7,10 +7,26 @@ For more information on this file, see
 https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/
 """
 
+# import os
+#
+# from django.core.wsgi import get_wsgi_application
+#
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "simplecms.settings")
+#
+# application = get_wsgi_application()
 import os
+import sys
 
-from django.core.wsgi import get_wsgi_application
+sys.stdout = sys.stderr
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "simplecms.settings")
+from os.path import abspath, dirname, join
+from site import addsitedir
 
-application = get_wsgi_application()
+from django.core.handlers.wsgi import WSGIHandler
+
+sys.path.insert(0, abspath(join(dirname(__file__), "../")))
+sys.path.insert(0, abspath(join(dirname(__file__), ". . /. . /")))
+
+os.environ["DJANGO_SETTINGS_MODULE"] = "simplecms.settings"
+
+application = WSGIHandler()
