@@ -8,12 +8,13 @@ from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.template import RequestContext
 from admin.user.permission import require_login
+from common import function
 
 # 分类管理界面
 @require_login
 def cat(request):
-    cat_list = Cat.objects.all()
-    return render_to_response('admin/cat/cat.html',{'cat_list':cat_list})
+    cat_list = function.get_cats()
+    return render_to_response('admin/cat/cat.html',{'cat_list': cat_list})
 
 # 添加分类
 @csrf_exempt
@@ -26,7 +27,7 @@ def add(request):
         return HttpResponseRedirect(reverse('cat'))
    else:
         new_cat = AddCat()
-        cats = Cat.objects.all()
+        cats = function.get_cats()
    return render_to_response('admin/cat/cat_add.html', {'new_cat': new_cat,'cats':cats})
 
 # 修改分类
@@ -43,7 +44,7 @@ def edit(request, cat_id):
         else:
            raise ValueError("修改失败")
     else:
-        cats = Cat.objects.all()
+        cats = function.get_cats()
         cat_form = cat
     kwvars ={
          'cat_id': cat_id,

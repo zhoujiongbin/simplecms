@@ -9,7 +9,9 @@ a:visited{text-decoration:none;color: #FFFFFF;}
 a:hover{text-decoration:none;color: #FFFFFF;}
 a:active{text-decoration:none;color: #FFFFFF;}*/
 
-#content{height: 20px!important;overflow: hidden;}
+/*表单元格高度*/
+#content{line-height: 1.7em;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;}
+
 
 tbody img{width: 100px;height: 80px;}
 

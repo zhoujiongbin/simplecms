@@ -12,15 +12,23 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='Power',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+                ('level', models.IntegerField(default=0)),
+                ('text', models.CharField(max_length=20, default='超级管理员')),
+            ],
+        ),
+        migrations.CreateModel(
             name='User',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
                 ('password', models.BinaryField()),
-                ('account', models.CharField(unique=True, max_length=20)),
+                ('account', models.CharField(max_length=20, unique=True)),
                 ('email', models.EmailField(max_length=254)),
-                ('power', models.IntegerField()),
-                ('joined_time', models.TimeField(default=datetime.datetime(2015, 8, 4, 16, 3, 59, 817609))),
+                ('joined_time', models.DateTimeField(default=datetime.datetime.now)),
                 ('last_login', models.TimeField(null=True)),
+                ('power', models.ForeignKey(to='user.Power', default=1)),
             ],
         ),
     ]

@@ -39,7 +39,9 @@
                 <div class="col-sm-6">
                     <select name="cat_id" class="form-control">
                         {% for item in cats %}
-                            <option value="{{ item.cat_id }}">{{ item.cat_name }}</option>
+                            {% if item.cat_id != 0 %}
+                                <option value="{{ item.cat_id }}">{{ item.cat_name }}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                 </div>
