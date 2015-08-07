@@ -40,7 +40,6 @@ INSTALLED_APPS = (
     'admin.detail',
     'admin.user',
     'home',
-    'admin.testcms',
 )
 
 MIDDLEWARE_CLASSES = (
