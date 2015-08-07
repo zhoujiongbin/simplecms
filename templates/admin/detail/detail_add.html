@@ -1,5 +1,18 @@
 {% extends 'base/admin_base.html' %}
 {% load staticfiles %}
+{% block js %}
+    <link rel="stylesheet" href="/static/kindeditor/themes/default/default.css"/>
+    <script charset="utf-8" src="/static/kindeditor/kindeditor-min.js"></script>
+    <script charset="UTF-8" src="/static/kindeditor/lang/zh_CN.js"></script>
+    <script>
+			KindEditor.ready(function(K) {
+				K.create('#mytextarea', {
+					themeType : 'default'
+				});
+			});
+		</script>
+{% endblock %}
+
 {% block title %}后台 | 公司信息管理{% endblock %}
 {% block content %}
     <div class="row">
@@ -19,7 +32,7 @@
             <div class="form-group">
                 <label for="" class="col-sm-2 control-label pt5 text-right">公司简介：</label>
                 <div class="col-sm-6">
-                    <textarea name="introduction" id="" value="" class="form-control" rows="5" ></textarea>
+                    <textarea name="introduction" id="mytextarea" value="" class="form-control" rows="5" ></textarea>
                 </div>
             </div>
             <div class="form-group">

@@ -20,21 +20,23 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>分类名称</th>
-                                    <th>父分类ID</th>
+                                    <th>父级</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
                             {% for i in cat_list %}
-                                <tr>
-                                    <td>{{ i.cat_id }}</td>
-                                    <td>{{ i.cat_name}}</td>
-                                    <td>{{ i.cat_father }}</td>
-            `                       <td>
-                                        <a href="{% url "cat_edit" i.cat_id%}" class="ml10 mr10">编辑</a>
-                                        <a href="{% url "cat_delete" i.cat_id %}" class="ml10 mr10">删除</a>
-                                    </td>
-                                </tr>
+                                {% if  i.cat_id != 0 %}
+                                    <tr>
+                                        <td>{{ i.cat_id }}</td>
+                                        <td>{{ i.cat_name}}</td>
+                                        <td>{{ i.cat_father_name }}</td>
+            `                           <td>
+                                            <a href="{% url "cat_edit" i.cat_id%}" class="ml10 mr10">编辑</a>
+                                            <a href="{% url "cat_delete" i.cat_id %}" class="ml10 mr10">删除</a>
+                                        </td>
+                                    </tr>
+                                {% endif %}
                             {% endfor %}
                             </tbody>
                         </table>

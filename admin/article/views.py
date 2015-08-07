@@ -6,14 +6,18 @@ from .models import Article
 from admin.cat.models import Cat
 from django.db import models
 from common import function
+from admin.user.permission import require_login
 
 # 文章管理页面
+@require_login
 def article(request):
     article_list = function.get_all_articles()
     return render_to_response('admin/article/article.html', {'article_list': article_list})
 
 # 添加文章
+
 @csrf_exempt
+@require_login
 def add(request):
     if request.POST:
         title = request.POST['title']
@@ -31,6 +35,7 @@ def add(request):
 
 # 文章编辑页面
 @csrf_exempt
+@require_login
 def edit(request, article_id):
     if request.POST:
         title = request.POST['title']
@@ -48,6 +53,7 @@ def edit(request, article_id):
 
 # 删除文章
 @csrf_exempt
+@require_login
 def delete(request, article_id):
     a = Article.objects.get(id=article_id)
     a.delete()

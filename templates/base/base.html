@@ -5,8 +5,10 @@
         <title>{% block title %}{# 页面标题写在这里 #}{% endblock %}</title>
 	</head>
     <body>
+        {% block header %}{% endblock %}
         {% block content %}{# 页面内容写在这里 #}{% endblock %}
         {% include 'base/foot.html' %}{# 底部放js脚本链接 #}
         {% block other %}{# 其他一些补充的js #}{% endblock %}
     </body>
+
 </html>

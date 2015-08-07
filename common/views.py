@@ -7,4 +7,4 @@ from django.shortcuts import render_to_response
 
 
 def error(request):
-    return render_to_response('base/error.html')
+    return render_to_response('base/../templates/404.html')

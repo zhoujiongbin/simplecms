@@ -1,5 +1,19 @@
 {% extends 'base/admin_base.html' %}
+{% block js %}
+    <link rel="stylesheet" href="/static/kindeditor/themes/default/default.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/datetimepicker/jquery.datetimepicker.css"/>
+    <script charset="utf-8" src="/static/kindeditor/kindeditor-min.js"></script>
+    <script charset="UTF-8" src="/static/kindeditor/lang/zh_CN.js"></script>
+    <script>
+			KindEditor.ready(function(K) {
+				K.create('#mytextarea', {
+					themeType : 'default'
+				});
+			});
+		</script>
+{% endblock %}
 {% block title %}后台 | 添加文章{% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="col-lg-12">
@@ -17,7 +31,7 @@
             <div class="form-group">
                 <label for="" class="col-sm-2 control-label pt5 text-right">作者：</label>
                 <div class="col-sm-6">
-                    <input type="text" name="author" id="" value="" class="form-control" />
+                    <input type="text" name="author" id="" value="admin" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
@@ -25,7 +39,9 @@
                 <div class="col-sm-6">
                     <select name="cat_id" class="form-control">
                         {% for item in cats %}
-                            <option value="{{ item.cat_id }}">{{ item.cat_name }}</option>
+                            {% if item.cat_id != 0 %}
+                                <option value="{{ item.cat_id }}">{{ item.cat_name }}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                 </div>
@@ -33,13 +49,14 @@
             <div class="form-group">
                 <label for="" class="col-sm-2 control-label pt5 text-right">发布时间：</label>
                 <div class="col-sm-6">
-                    <input type="datetime-local" name="publish_time" id="nowTime" value="" class="form-control" />
+                      <input type="text" name="publish_time" id="nowTime" class="form-control" value=""/>
+{#                    <input type="datetime-local" name="publish_time" id="nowTime" value="" class="form-control" />#}
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-2 control-label pt5 text-right">正文内容：</label>
                 <div class="col-sm-6">
-                    <textarea type="text" name="content" id="" value="" class="form-control" rows="12"></textarea>
+                    <textarea type="text" name="content" id="mytextarea" value="" class="form-control" rows="12"></textarea>
                 </div>
             </div>
             <div class="col-sm-offset-2 col-sm-10 mt20">
@@ -48,4 +65,12 @@
             </div>
         </form>
     </div>
+{% endblock %}
+{% block endjs %}
+    <script src="/static/datetimepicker/jquery.js"></script>
+    <script src="/static/datetimepicker/jquery.datetimepicker.js"></script>
+    <script>
+        $('#nowTime').datetimepicker();
+        $('#nowTime').datetimepicker({value:'',step:10});
+    </script>
 {% endblock %}
