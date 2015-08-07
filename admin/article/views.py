@@ -1,75 +1,65 @@
-from django.shortcuts import render
-from django.http import Http404, HttpResponse
+from django.shortcuts import render_to_response
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
+from django.core.urlresolvers import reverse
 from .models import Article
 from admin.cat.models import Cat
 from django.db import models
+from common import function
+from admin.user.permission import require_login
 
+# 鏂囩珷绠＄悊椤甸潰
+@require_login
 def article(request):
-    return HttpResponse('article')
+    article_list = function.get_all_articles()
+    return render_to_response('admin/article/article.html', {'article_list': article_list})
+
+# 娣诲姞鏂囩珷
 
 @csrf_exempt
+@require_login
 def add(request):
-    article_title = request.POST['article_title']
-    article_author = request.POST['article_author']
-    article_content = request.POST['article_content']
-    article_cat_id = request.POST['article_id']
-    article=Article()
-    article.article_title=article_title
-    article.article_author=article_author
-    article.article_content=article_content
-    article.article_cat_id=article_cat_id
-    article.save()
-    return HttpResponse('save seccess')
+    if request.POST:
+        title = request.POST['title']
+        author = request.POST['author']
+        cat_id = request.POST['cat_id']
+        publish_time = request.POST['publish_time']
+        content = request.POST['content']
+        a = Article(article_title=title, article_author=author, publish_time=publish_time, article_content=content, article_cat_id_id=cat_id)
+        a.save()
+        return HttpResponseRedirect(reverse('article'))
+    else:
+        cats = function.get_cats()
+        return render_to_response('admin/article/article_add.html', {'cats': cats})
 
 
-
-#编辑文章页面
-def index(request):
-    query_set = Cat.objects.all()
-    cat = []  #保存全部分类
-    # 获取一级分类
-    for item in query_set:
-        cat.append({'cat_name':item.cat_name, 'cat_id':item.cat_id})
-    return render(request,'add.html',{'cat':cat})
-
-
-#后台查看、修改文章的页面
+# 鏂囩珷缂栬緫椤甸潰
 @csrf_exempt
-def check(request):
-    id=request.POST['id']
-    article=Article.objects.get(id=id)
-    return render(request,'check.html',{'article':article})
+@require_login
+def edit(request, article_id):
+    if request.POST:
+        title = request.POST['title']
+        author = request.POST['author']
+        cat_id = request.POST['cat_id']
+        publish_time = request.POST['publish_time']
+        content = request.POST['content']
+        a = Article.objects.filter(id=int(article_id))
+        a.update(article_title=title, article_author=author, publish_time=publish_time, article_content=content, article_cat_id_id=cat_id)
+        return HttpResponseRedirect(reverse('article'))
+    else:
+        article_detail = function.get_article(article_id)
+        cats = function.get_cats()
+        return render_to_response('admin/article/article_editor.html', {'cats': cats, 'article': article_detail})
 
-
-#删除文章
+# 鍒犻櫎鏂囩珷
 @csrf_exempt
-def delete(request):
-    id=request.POST['id']
-    article=Article.objects.get(id=id)
-    article.delete()
-    return HttpResponse('delete seccuss')
-
-#修改文章
-@csrf_exempt
-def edit(request):
-    id=request.POST['id']
-    article=Article.objects.get(id=id)
-    article.article_title=request.POST['article_title']
-    article.article_author=request.POST['article_author']
-    article.article_content=request.POST['article_content']
-    article.publish_time= models.DateTimeField(auto_now_add=True)
-    article._do_update()
-    return HttpResponse('edit success')
+@require_login
+def delete(request, article_id):
+    a = Article.objects.get(id=article_id)
+    a.delete()
+    return HttpResponse('<script>alert("鍒犻櫎鎴愬姛");window.location.href="/admin/article"</script>')
 
 
-def list(request):
-    article=[]
-    query_set = Article.objects.all()
-    # 获取一级分类
-    for item in query_set:
-        article.append({'id':item.id,'article_title':item.article_title, 'article_content':item.article_content})
-    return render(request,'add.html',{'article':article})
 
 
 

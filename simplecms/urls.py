@@ -18,10 +18,6 @@ from django.conf.urls import include, url
 
 urlpatterns = [
     # url(r'^admin/', include(admin.site.urls)),
-    url(r'|^index/|^home/', include('home.urls')),
-    url(r'^admin/article/', include('admin.article.urls')),
-    url(r'^admin/user/', include('admin.user.urls')),
-    url(r'^admin/cat/', include('admin.cat.urls')),
-    url(r'^admin/detail/', include('admin.detail.urls')),
-    url(r'^admin/test/',include('admin.testcms.urls'))
+    url(r'|^index/|^home/', include('home.urls', namespace='home')),
+    url(r'^admin/', include('admin.urls')),
 ]
