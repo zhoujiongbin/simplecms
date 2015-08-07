@@ -62,14 +62,16 @@ def handle_uploaded_file(f):
 
     try:
         path = "./static/upload" + time.strftime('/%Y/%m/%d/')
+        path_save = 'D:/Documents/code/simplecms/static/upload' + time.strftime('/%Y/%m/%d/')
         if not os.path.exists(path):
             os.makedirs(path)
-        file_name = path + f.name
+        file_name = path_save + f.name
+        file_name_save = path + f.name
         destination = open(file_name, 'wb+')
         for chunk in f.chunks():
             destination.write(chunk)
         destination.close()
     except Exception as e:
         print(e)
-    file_path = file_name.lstrip('./static/')
+    file_path = file_name_save.lstrip('./static/')
     return file_path

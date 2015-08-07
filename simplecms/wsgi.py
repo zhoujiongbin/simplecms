@@ -13,3 +13,6 @@ from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "simplecms.settings")
 application = get_wsgi_application()
+
+import sys
+sys.path.append('D:/Documents/code/simplecms')
