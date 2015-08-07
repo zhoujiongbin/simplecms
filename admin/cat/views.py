@@ -9,6 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.template import RequestContext
 from admin.user.permission import require_login
 from common import function
+from django.core.paginator import PageNotAnInteger, Paginator, InvalidPage, EmptyPage
 
 # 分类管理界面
 @require_login
@@ -59,6 +60,24 @@ def edit(request, cat_id):
 def delete(request,cat_id):
     Cat.objects.get(pk=cat_id).delete()
     return HttpResponseRedirect(reverse('cat'))
+
+
+#关键字搜索分类
+def search_by_page(request):
+    each_page=2
+    if 'q' in request.GET and request.GET['q']:
+          q = request.GET['q']
+    cat_list=function.get_cat_search(q)
+    paginator = Paginator(cat_list,each_page)
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    try:
+        contacts = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        contacts = paginator.page(paginator.num_pages)
+    return render_to_response('admin/cat/cat.html',{'cat_list': contacts,'q':q,'paginator':paginator})
 
 
 
