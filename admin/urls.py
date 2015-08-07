@@ -9,5 +9,4 @@ urlpatterns = [
     url(r'^user/', include('admin.user.urls')),
     url(r'^cat/', include('admin.cat.urls')),
     url(r'^detail/', include('admin.detail.urls')),
-    url(r'^test/',include('admin.testcms.urls')),
 ]
