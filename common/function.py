@@ -21,7 +21,12 @@ def get_cat(id):
 
 # 获取所有分类
 def get_cats():
-    cats = []  # 用来储存搜索结果
+    cats = [{
+        'cat_father_name': '无',
+        'cat_name': '无',
+        'cat_url': '/'+str(0),  # 分类的链接url
+        'cat_id': 0,
+    },]  # 用来储存搜索结果，先储存一个最顶级的父级分类
     try:
         query_set = Cat.objects.all()
         # 获取一级分类
@@ -29,7 +34,14 @@ def get_cats():
             father_id = item.cat_father
             if father_id == 0:
                 cats.append({
-                    'cat_father': item.cat_father,
+                    'cat_father_name': '无',
+                    'cat_name': item.cat_name,
+                    'cat_url': '/'+str(item.cat_id),  # 分类的链接url
+                    'cat_id': item.cat_id,
+                })
+            elif father_id != 0:
+                cats.append({
+                    'cat_father_name': get_cat(father_id)['cat_name'],
                     'cat_name': item.cat_name,
                     'cat_url': '/'+str(item.cat_id),  # 分类的链接url
                     'cat_id': item.cat_id,
