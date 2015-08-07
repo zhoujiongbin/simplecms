@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Cat',
             fields=[
-                ('cat_id', models.AutoField(serialize=False, primary_key=True)),
+                ('cat_id', models.AutoField(primary_key=True, serialize=False)),
                 ('cat_name', models.CharField(max_length=100)),
                 ('cat_father', models.IntegerField()),
             ],
