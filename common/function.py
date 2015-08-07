@@ -4,6 +4,7 @@
 from admin.cat.models import Cat
 from admin.article.models import Article
 from admin.detail.models import Detail
+from django.db.models import Q
 
 # 根据ID获取分类名
 def get_cat(id):
@@ -125,3 +126,67 @@ def get_article(id=1):
     except Article.DoesNotExist:
         article = None
     return article
+
+
+
+def get_article_search(q):
+    if not q:
+        return get_all_articles()
+    else:
+        qset = (
+            Q(article_title__icontains = q) |
+            Q(article_author__icontains = q)|
+            Q(article_content__icontains = q)
+             )
+        article_list = []
+        query_set = Article.objects.filter(qset)
+        for item in query_set:
+            article_list.append({
+                'article_id': item.id,
+                'article_title': item.article_title,
+                'article_author': item.article_author,
+                'article_content': item.article_content,
+                'publish_time': item.publish_time,
+                'cat': get_cat(int(item.article_cat_id_id)),
+                'article_url': '/'+str(item.article_cat_id_id)+'/'+str(item.id),  # 文章的链接url
+                'article_edit_url': '/edit/'+str(item.id),
+            })
+        return article_list
+
+
+
+
+def get_cat_search(q):
+    if not q:
+        return get_cat()
+    else:
+        qset = (
+            Q(cat_name__icontains = q)
+             )
+    cat_list = [{
+        'cat_father_name': '无',
+        'cat_name': '无',
+        'cat_url': '/'+str(0),  # 分类的链接url
+        'cat_id': 0,
+    },]  # 用来储存搜索结果，先储存一个最顶级的父级分类
+    try:
+        query_set = Cat.objects.filter(qset)
+        for item in query_set:
+            father_id = item.cat_father
+            if father_id == 0:
+                cat_list.append({
+                    'cat_father_name': '无',
+                    'cat_name': item.cat_name,
+                    'cat_url': '/'+str(item.cat_id),  # 分类的链接url
+                    'cat_id': item.cat_id,
+                })
+            elif father_id != 0:
+                cat_list.append({
+                    'cat_father_name': get_cat(father_id)['cat_name'],
+                    'cat_name': item.cat_name,
+                    'cat_url': '/'+str(item.cat_id),  # 分类的链接url
+                    'cat_id': item.cat_id,
+                })
+    except Cat.DoesNotExist:
+        cat_list = []
+    return cat_list

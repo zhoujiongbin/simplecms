@@ -7,6 +7,7 @@ from admin.cat.models import Cat
 from django.db import models
 from common import function
 from admin.user.permission import require_login
+from django.core.paginator import PageNotAnInteger, Paginator, InvalidPage, EmptyPage
 
 # 文章管理页面
 @require_login
@@ -60,7 +61,22 @@ def delete(request, article_id):
     return HttpResponse('<script>alert("删除成功");window.location.href="/admin/article"</script>')
 
 
-
+#关键字搜索文章
+def search_by_page(request):
+    each_page=2
+    if 'q' in request.GET and request.GET['q']:
+          q = request.GET['q']
+    article_list=function.get_article_search(q)
+    paginator = Paginator(article_list,each_page)
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    try:
+        contacts = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        contacts = paginator.page(paginator.num_pages)
+    return render_to_response('admin/article/article.html',{'article_list': contacts,'q':q,'paginator':paginator})
 
 
 

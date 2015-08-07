@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^add/', views.add, name='article_add'),              # 添加保存文章
     url(r'^delete/(?P<article_id>\d+)/', views.delete, name='article_delete'),              # 删除文章
     url(r'^edit/(?P<article_id>\d+)/', views.edit, name='article_edit'),           # 修改文章
+    url(r'^search/', views.search_by_page, name='search_article'),
 
 ]

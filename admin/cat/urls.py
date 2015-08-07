@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^add/$',views.add,name='cat_add'),
     url(r'^edit/(?P<cat_id>\d+)/$', views.edit, name='cat_edit'),
     url(r'^delete/(?P<cat_id>\d+)/$',views.delete,name='cat_delete'),
+    url(r'^search/', views.search_by_page, name='search_cat'),
 ]
