@@ -80,3 +80,10 @@
     </div><!-- /.container-fluid -->
 {% endblock %}
 
+<script src="{% static 'js/clamp.min.js' %}"></script>
+
+			<script>
+				var header = document.getElementById("content");
+
+				        $clamp(header, {clamp: 5, useNativeClamp: false});
+			</script>
